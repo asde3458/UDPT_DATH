@@ -1,0 +1,78 @@
+REGISTER: code=500, response={"error":"Database error","detail":"Access denied for user 'root'@'localhost' (using password: YES)"}
+REGISTER: code=500, response={"error":"Database error","detail":"Access denied for user 'root'@'localhost' (using password: YES)"}
+REGISTER: code=500, response={"error":"Database error","detail":"Access denied for user 'root'@'localhost' (using password: YES)"}
+REGISTER: code=500, response={"error":"Database error","detail":"Access denied for user 'root'@'localhost' (using password: YES)"}
+REGISTER: code=201, response={"message":"User created successfully"}
+LOGIN: code=200, response={"id":1,"username":"a","role":"doctor"}
+LOGIN: code=200, response={
+  "id": 1, 
+  "role": "doctor", 
+  "username": "a"
+}
+
+LOGIN: code=200, response={
+  "id": 1, 
+  "role": "doctor", 
+  "username": "a"
+}
+
+REGISTER: code=201, response={
+  "message": "User created successfully"
+}
+
+LOGIN: code=200, response={
+  "id": 2, 
+  "role": "patient", 
+  "username": "ab"
+}
+
+LOGIN: code=200, response={
+  "id": 2, 
+  "role": "patient", 
+  "username": "ab"
+}
+
+LOGIN: code=200, response={
+  "id": 2, 
+  "role": "patient", 
+  "username": "ab"
+}
+
+LOGIN: code=200, response={
+  "id": 1, 
+  "role": "doctor", 
+  "username": "a"
+}
+
+LOGIN: code=200, response={
+  "id": 2, 
+  "role": "patient", 
+  "username": "ab"
+}
+
+LOGIN: code=200, response={
+  "id": 1, 
+  "role": "doctor", 
+  "username": "a"
+}
+
+LOGIN: code=200, response={"id":1,"username":"a","role":"doctor"}
+LOGIN: code=200, response={"id":2,"username":"ab","role":"patient"}
+LOGIN: code=200, response={"id":1,"username":"a","role":"doctor"}
+LOGIN: code=200, response={"id":2,"username":"ab","role":"patient"}
+LOGIN: code=200, response={"id":1,"username":"a","role":"doctor"}
+LOGIN: code=200, response={"id":2,"username":"ab","role":"patient"}
+LOGIN: code=200, response={"id":2,"username":"ab","role":"patient"}
+LOGIN: code=200, response={"id":1,"username":"a","role":"doctor"}
+LOGIN: code=200, response={"id":2,"username":"ab","role":"patient"}
+REGISTER: code=201, response={"message":"User created successfully"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient"}
+LOGIN: code=200, response={"id":1,"username":"a","role":"doctor"}
+LOGIN: code=200, response={"id":2,"username":"ab","role":"patient"}
+LOGIN: code=200, response={"id":1,"username":"a","role":"doctor"}
+LOGIN: code=401, response={"error":"Invalid credentials"}
+LOGIN: code=401, response={"error":"Invalid credentials"}
+REGISTER: code=201, response={"message":"User created successfully"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}

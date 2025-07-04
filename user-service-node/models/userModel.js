@@ -1,0 +1,12 @@
+const pool = require('../config/db');
+
+async function findByUsername(username) {
+    const [rows] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+    return rows[0];
+}
+
+async function createUser(username, hash, role) {
+    await pool.query('INSERT INTO users (username, password, role) VALUES (?, ?, ?)', [username, hash, role]);
+}
+
+module.exports = { findByUsername, createUser }; 
