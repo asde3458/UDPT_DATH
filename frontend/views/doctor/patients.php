@@ -71,6 +71,9 @@
     </div>
 
     <script>
+        // Debug session info
+        console.log('Session info:', <?php echo json_encode($_SESSION['user']); ?>);
+
         const doctorId = '<?php echo $_SESSION['user']['id']; ?>';
         const serviceUrl = '<?php echo PATIENT_SERVICE_URL; ?>/patients';
 
@@ -336,7 +339,7 @@
                     treatment: form.treatment.value,
                     notes: form.notes.value,
                     doctorId: doctorId,
-                    doctorName: '<?php echo htmlspecialchars($_SESSION['user']['full_Name']); ?>',
+                    doctorName: '<?php echo htmlspecialchars($_SESSION['user']['fullName']); ?>',
                     date: new Date()
                 });
             }
@@ -387,7 +390,7 @@
                         treatment: form.treatment.value,
                         notes: form.notes.value,
                         doctorId: doctorId,
-                        doctorName: '<?php echo htmlspecialchars($_SESSION['user']['full_Name']); ?>',
+                        doctorName: '<?php echo htmlspecialchars($_SESSION['user']['fullName']); ?>',
                         date: new Date()
                     })
                 })

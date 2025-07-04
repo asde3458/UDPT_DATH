@@ -40,7 +40,7 @@
     <div class="container mt-4">
         <div class="row mb-4">
             <div class="col">
-                <h2>Welcome back</h2>
+                <<h2>Welcome, Dr <?php echo htmlspecialchars($_SESSION['user']['fullName']); ?>!</h2>
             </div>
         </div>
 
@@ -114,6 +114,7 @@
     </div>
 
     <script>
+        console.log('Session info:', <?php echo json_encode($_SESSION['user']); ?>);
         const doctorId = '<?php echo $_SESSION['user']['id']; ?>';
 
         // Fetch today's appointments
