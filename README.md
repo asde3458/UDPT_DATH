@@ -1,6 +1,6 @@
 # Hospital Management System
 
-A microservices-based hospital management system with patient management, appointment scheduling, and user authentication.
+A microservices-based hospital management system with patient management, appointment scheduling, prescription management, and user authentication.
 
 ## System Architecture
 
@@ -11,7 +11,7 @@ The system consists of the following components:
    - User interface for all functionalities
    - Communicates with microservices via REST APIs
 
-2. User Service (Python + MySQL)
+2. User Service (Node.js + MySQL)
    - Handles user authentication and authorization
    - Manages user roles (Admin, Doctor, Patient)
    - Port: 5000
@@ -25,6 +25,11 @@ The system consists of the following components:
    - Handles appointment scheduling
    - Manages appointment status
    - Port: 3001
+
+5. Prescription Service (Python Flask + MongoDB)
+   - Manages prescription creation and tracking
+   - Handles medication prescriptions
+   - Port: 3002
 
 ## Prerequisites
 
@@ -44,12 +49,12 @@ The system consists of the following components:
 CREATE DATABASE hospital_user_service;
 ```
 
-### 2. User Service (Python)
+### 2. User Service (Node.js)
 
 ```bash
-cd user-service
-pip install -r requirements.txt
-python app.py
+cd user-service-node
+npm install
+npm start
 ```
 
 ### 3. Patient Service (Node.js)
@@ -68,7 +73,15 @@ npm install
 npm start
 ```
 
-### 5. Frontend (PHP)
+### 5. Prescription Service (Python Flask)
+
+```bash
+cd prescription-service
+pip install -r requirements.txt
+python app.py
+```
+
+### 6. Frontend (PHP)
 
 1. Configure your web server to point to the `frontend/public` directory
 2. Ensure the web server has PHP support enabled
@@ -88,6 +101,13 @@ npm start
 - View appointment calendar
 - Filter appointments by doctor or patient
 
+### Prescription Management
+- Create prescriptions (Doctors only)
+- View prescription details
+- Update prescription status (Doctors & Patients)
+- Manage medication lists
+- Track prescription status (pending, dispensed, completed)
+
 ### User Management
 - User registration with role selection (Doctor/Patient)
 - User authentication
@@ -99,11 +119,15 @@ npm start
    - View their own appointments
    - Schedule new appointments
    - Update their profile
+   - View their prescriptions
+   - Update prescription status
 
 2. Doctors can:
    - View patient information
    - Manage appointments
    - Update medical records
+   - Create, edit, and delete prescriptions
+   - Update prescription status
 
 3. Admins can:
    - Access all functionalities
@@ -130,4 +154,15 @@ npm start
 - GET /appointments/:id - Get appointment details
 - PUT /appointments/:id - Update appointment
 - DELETE /appointments/:id - Delete appointment
-- PATCH /appointments/:id/status - Update appointment status 
+- PATCH /appointments/:id/status - Update appointment status
+
+### Prescription Service (Port 3002)
+- GET /prescriptions - List all prescriptions (Doctors)
+- GET /prescriptions/patient/:patient_id - Get patient prescriptions
+- GET /prescriptions/doctor/:doctor_id - Get doctor prescriptions
+- GET /prescriptions/:id - Get prescription details
+- POST /prescriptions - Create prescription (Doctors)
+- PUT /prescriptions/:id - Update prescription (Doctors)
+- DELETE /prescriptions/:id - Delete prescription (Doctors)
+- PATCH /prescriptions/:id/status - Update prescription status
+- POST /prescriptions/:id/medications - Add medication to prescription 

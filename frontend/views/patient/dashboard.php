@@ -26,6 +26,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/patient/appointments">My Appointments</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/patient/prescriptions">My Prescriptions</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -40,7 +43,7 @@
         <h2>Welcome <?php echo htmlspecialchars($_SESSION['user']['fullName']); ?> </h2>
 
         <div class="row mt-4">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">My Profile</h5>
@@ -50,7 +53,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">My Appointments</h5>
@@ -59,7 +62,9 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="row mt-4">
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
@@ -69,8 +74,64 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">My Prescriptions</h5>
+                        <p class="card-text">View and manage your prescriptions</p>
+                        <a href="/patient/prescriptions" class="btn btn-primary">View Prescriptions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Prescriptions -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Prescriptions</h5>
+                        <div id="recentPrescriptions">
+                            <div class="text-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        const patientId = '<?php echo $_SESSION['user']['id']; ?>';
+
+        // Fetch recent prescriptions
+        fetch(`<?php echo PRESCRIPTION_SERVICE_URL; ?>/prescriptions/patient/${patientId}`)
+            .then(response => response.json())
+            .then(prescriptions => {
+                const html = prescriptions.length ? prescriptions.map(prescription => `
+                    <div class="mb-3 p-3 border rounded">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Dr. ${prescription.doctor_name}</h6>
+                                <p class="mb-1"><strong>Diagnosis:</strong> ${prescription.diagnosis}</p>
+                                <p class="mb-1"><strong>Status:</strong> <span class="badge bg-${prescription.status === 'completed' ? 'success' : 'primary'}">${prescription.status}</span></p>
+                                <small class="text-muted">Prescribed on: ${new Date(prescription.created_at).toLocaleDateString()}</small>
+                            </div>
+                            <a href="/patient/prescriptions/${prescription._id}" class="btn btn-sm btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                `).join('') : '<p class="text-muted">No prescriptions found</p>';
+
+                document.getElementById('recentPrescriptions').innerHTML = html;
+            })
+            .catch(error => {
+                document.getElementById('recentPrescriptions').innerHTML = '<p class="text-danger">Error loading prescriptions</p>';
+            });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

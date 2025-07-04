@@ -97,6 +97,47 @@ switch ($path) {
         }
         break;
 
+    // Prescription routes for doctor
+    case '/prescriptions':
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'doctor') {
+            header('Location: /login');
+            exit;
+        }
+        require __DIR__ . '/../views/doctor/prescriptions.php';
+        break;
+    case '/prescriptions/new':
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'doctor') {
+            header('Location: /login');
+            exit;
+        }
+        require __DIR__ . '/../views/doctor/prescription-form.php';
+        break;
+    case (preg_match('#^/prescriptions/([a-zA-Z0-9]+)$#', $path, $matches) ? true : false):
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'doctor') {
+            header('Location: /login');
+            exit;
+        }
+        $_GET['id'] = $matches[1];
+        require __DIR__ . '/../views/doctor/prescription-detail.php';
+        break;
+
+    // Prescription routes for patient
+    case '/patient/prescriptions':
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'patient') {
+            header('Location: /login');
+            exit;
+        }
+        require __DIR__ . '/../views/patient/prescriptions.php';
+        break;
+    case (preg_match('#^/patient/prescriptions/([a-zA-Z0-9]+)$#', $path, $matches) ? true : false):
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'patient') {
+            header('Location: /login');
+            exit;
+        }
+        $_GET['id'] = $matches[1];
+        require __DIR__ . '/../views/patient/prescription-detail.php';
+        break;
+
     default:
         // Handle 404
         http_response_code(404);

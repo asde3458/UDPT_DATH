@@ -27,6 +27,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/appointments">Appointments</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/prescriptions">Prescriptions</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -89,6 +92,28 @@
                 </div>
             </div>
 
+            <!-- Recent Prescriptions Card -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-prescription text-info me-2"></i>
+                            Recent Prescriptions
+                        </h5>
+                        <div id="recentPrescriptions">
+                            <div class="text-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/prescriptions" class="btn btn-info btn-sm text-white">Manage Prescriptions</a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Quick Actions Card -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100">
@@ -105,6 +130,10 @@
                             <a href="/appointments" class="list-group-item list-group-item-action">
                                 <i class="fas fa-calendar-plus me-2"></i>
                                 Schedule Appointment
+                            </a>
+                            <a href="/prescriptions/new" class="list-group-item list-group-item-action">
+                                <i class="fas fa-prescription me-2"></i>
+                                Create Prescription
                             </a>
                         </div>
                     </div>
@@ -156,6 +185,29 @@
             })
             .catch(error => {
                 document.getElementById('recentPatients').innerHTML = '<p class="text-danger">Error loading patients</p>';
+            });
+
+        // Fetch recent prescriptions
+        fetch(`<?php echo PRESCRIPTION_SERVICE_URL; ?>/prescriptions/doctor/${doctorId}?limit=5`)
+            .then(response => response.json())
+            .then(prescriptions => {
+                const html = prescriptions.length ? prescriptions.map(prescription => `
+                    <div class="mb-2 p-2 border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>${prescription.patient_name || 'Patient'}</strong>
+                                <br>
+                                <small class="text-muted">Status: ${prescription.status}</small>
+                            </div>
+                            <small class="text-muted">${new Date(prescription.created_at).toLocaleDateString()}</small>
+                        </div>
+                    </div>
+                `).join('') : '<p class="text-muted">No recent prescriptions</p>';
+
+                document.getElementById('recentPrescriptions').innerHTML = html;
+            })
+            .catch(error => {
+                document.getElementById('recentPrescriptions').innerHTML = '<p class="text-danger">Error loading prescriptions</p>';
             });
     </script>
 

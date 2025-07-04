@@ -183,3 +183,27 @@ LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullNam
 LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
 LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
 LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=401, response={"error":"Invalid credentials"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
