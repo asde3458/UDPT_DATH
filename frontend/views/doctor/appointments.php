@@ -110,7 +110,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const doctorId = '<?php echo $_SESSION['user']['id']; ?>';
-        const doctorName = '<?php echo $_SESSION['user']['name']; ?>';
+        const doctorName = '<?php echo $_SESSION['user']['full_name']; ?>';
         const serviceUrl = '<?php echo APPOINTMENT_SERVICE_URL; ?>/appointments';
         let appointmentModal;
 

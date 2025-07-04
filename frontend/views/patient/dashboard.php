@@ -37,7 +37,7 @@
     </nav>
 
     <div class="container mt-4">
-        <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user']['name']); ?>!</h2>
+        <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user']['full_name']); ?>!</h2>
 
         <div class="row mt-4">
             <div class="col-md-4">

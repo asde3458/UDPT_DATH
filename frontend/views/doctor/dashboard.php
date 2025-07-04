@@ -40,7 +40,7 @@
     <div class="container mt-4">
         <div class="row mb-4">
             <div class="col">
-                <h2>Welcome, Dr. <?php echo htmlspecialchars($_SESSION['user']['name']); ?>!</h2>
+                <h2>Welcome back</h2>
             </div>
         </div>
 
@@ -51,7 +51,7 @@
                     <div class="card-body">
                         <h5 class="card-title">
                             <i class="fas fa-calendar-day text-primary me-2"></i>
-                            Today's Appointments
+                            Appointments
                         </h5>
                         <div id="todayAppointments">
                             <div class="text-center">

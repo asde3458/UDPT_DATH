@@ -336,7 +336,7 @@
                     treatment: form.treatment.value,
                     notes: form.notes.value,
                     doctorId: doctorId,
-                    doctorName: '<?php echo htmlspecialchars($_SESSION['user']['fullName']); ?>',
+                    doctorName: '<?php echo htmlspecialchars($_SESSION['user']['full_Name']); ?>',
                     date: new Date()
                 });
             }
@@ -387,7 +387,7 @@
                         treatment: form.treatment.value,
                         notes: form.notes.value,
                         doctorId: doctorId,
-                        doctorName: '<?php echo htmlspecialchars($_SESSION['user']['fullName']); ?>',
+                        doctorName: '<?php echo htmlspecialchars($_SESSION['user']['full_Name']); ?>',
                         date: new Date()
                     })
                 })

@@ -121,7 +121,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const patientId = '<?php echo $_SESSION['user']['id']; ?>';
-        const patientName = '<?php echo $_SESSION['user']['name']; ?>';
+        const patientName = '<?php echo $_SESSION['user']['full_name']; ?>';
         const serviceUrl = '<?php echo APPOINTMENT_SERVICE_URL; ?>/appointments';
         let appointmentModal;
 
@@ -228,14 +228,10 @@
         function showRequestForm() {
             document.getElementById('modalTitle').textContent = 'Request Appointment';
             document.getElementById('modalContent').innerHTML = `
-                <form onsubmit="requestAppointment(event)" id="appointmentForm">
-                    <div class="mb-3">
-                        <label class="form-label">Patient ID <span class="text-danger">*</span></label>
-                        <input type="text" name="patientId" class="form-control" value="${patientId}" readonly>
-                    </div>
+                <form onsubmit="requestAppointment(event)">
                     <div class="mb-3">
                         <label class="form-label">Patient Name <span class="text-danger">*</span></label>
-                        <input type="text" name="patientName" class="form-control" value="${patientName}" readonly>
+                        <input type="text" name="patientName" class="form-control" required placeholder="Enter patient's full name">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Doctor ID <span class="text-danger">*</span></label>
@@ -246,65 +242,55 @@
                         <input type="text" name="doctorName" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Date <span class="text-danger">*</span></label>
+                        <label class="form-label">Appointment Date <span class="text-danger">*</span></label>
                         <input type="date" name="date" class="form-control" required min="${new Date().toISOString().split('T')[0]}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Time <span class="text-danger">*</span></label>
+                        <label class="form-label">Appointment Time <span class="text-danger">*</span></label>
                         <div class="row">
                             <div class="col-6">
                                 <select name="hour" class="form-select" required>
                                     <option value="">Hour</option>
-                                    ${Array.from({length: 12}, (_, i) => i + 1).map(h =>
-                                        ` < option value = "${h}" > $ {
-                h.toString().padStart(2, '0')
-            } < /option>`
-        ).join('')
-        } <
-        /select> < /
-        div > <
-            div class = "col-3" >
-            <
-            select name = "minute"
-        class = "form-select"
-        required >
-            <
-            option value = "" > Min < /option> <
-        option value = "00" > 00 < /option> <
-        option value = "30" > 30 < /option> < /
-            select > <
-            /div> <
-        div class = "col-3" >
-        <
-        select name = "ampm"
-        class = "form-select"
-        required >
-            <
-            option value = "AM" > AM < /option> <
-        option value = "PM" > PM < /option> < /
-            select > <
-            /div> < /
-            div > <
-            /div> <
-        div class = "mb-3" >
-        <
-        label class = "form-label" > Reason < span class = "text-danger" > * < /span></label >
-            <
-            textarea name = "reason"
-        class = "form-control"
-        rows = "3"
-        required > < /textarea> < /
-            div > <
-            div class = "text-end" >
-            <
-            button type = "button"
-        class = "btn btn-secondary"
-        data - bs - dismiss = "modal" > Cancel < /button> <
-        button type = "submit"
-        class = "btn btn-primary" > Request Appointment < /button> < /
-            div > <
-            /form>
-        `;
+                                    <option value="1">01</option>
+                                    <option value="2">02</option>
+                                    <option value="3">03</option>
+                                    <option value="4">04</option>
+                                    <option value="5">05</option>
+                                    <option value="6">06</option>
+                                    <option value="7">07</option>
+                                    <option value="8">08</option>
+                                    <option value="9">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <select name="minute" class="form-select" required>
+                                    <option value="">Min</option>
+                                    <option value="00">00</option>
+                                    <option value="30">30</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <select name="ampm" class="form-select" required>
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Reason for Visit <span class="text-danger">*</span></label>
+                        <textarea name="reason" class="form-control" rows="3" required placeholder="Please describe your symptoms or reason for visit"></textarea>
+                    </div>
+                    <input type="hidden" name="status" value="scheduled">
+                    <div class="text-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Request Appointment</button>
+                    </div>
+                </form>
+            `;
             appointmentModal.show();
         }
 
@@ -319,75 +305,73 @@
             let hour24 = hour;
             if (ampm === 'PM' && hour !== 12) hour24 += 12;
             if (ampm === 'AM' && hour === 12) hour24 = 0;
-            const time = `
-        $ {
-            hour24.toString().padStart(2, '0')
-        }: $ {
-            minute.toString().padStart(2, '0')
-        }
-        `;
+            const time = `${hour24.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+
+            // Format date to match backend expectations (YYYY-MM-DD)
+            const formattedDate = form.date.value;
+
+            const appointmentData = {
+                patientId: patientId, // still from session
+                patientName: form.patientName.value, // now from form input
+                doctorId: form.doctorId.value,
+                doctorName: form.doctorName.value,
+                date: formattedDate,
+                time: time,
+                reason: form.reason.value,
+                status: 'scheduled'
+            };
+
+            console.log('Sending appointment data:', appointmentData); // Debug log
 
             fetch(serviceUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    patientId: patientId,
-                    patientName: patientName,
-                    doctorId: form.doctorId.value,
-                    doctorName: form.doctorName.value,
-                    date: form.date.value,
-                    time: time,
-                    reason: form.reason.value,
-                    status: 'scheduled'
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(appointmentData)
                 })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => Promise.reject(err));
-                }
-                return response.json();
-            })
-            .then(() => {
-                appointmentModal.hide();
-                showSuccess('Appointment requested successfully');
-                fetchAppointments();
-            })
-            .catch(error => {
-                showError(error.error || 'Failed to request appointment');
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => Promise.reject(err));
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    appointmentModal.hide();
+                    showSuccess('Appointment requested successfully');
+                    fetchAppointments();
+                })
+                .catch(error => {
+                    showError(error.error || 'Failed to request appointment');
+                    console.error('Appointment request error:', error); // Debug log
+                });
         }
 
         function cancelAppointment(id) {
             if (!confirm('Are you sure you want to cancel this appointment?')) return;
 
-            fetch(`
-        $ {
-            serviceUrl
-        }
-        /${id}`, {
-        method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status: 'cancelled'
-            })
-        })
-        .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => Promise.reject(err));
-                }
-                return response.json();
-            })
-            .then(() => {
-                showSuccess('Appointment cancelled successfully');
-                fetchAppointments();
-            })
-            .catch(error => {
-                showError(error.error || 'Failed to cancel appointment');
-            });
+            fetch(`${serviceUrl}/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        status: 'cancelled'
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => Promise.reject(err));
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    showSuccess('Appointment cancelled successfully');
+                    fetchAppointments();
+                })
+                .catch(error => {
+                    showError(error.error || 'Failed to cancel appointment');
+                });
         }
 
         function filterAppointments() {
