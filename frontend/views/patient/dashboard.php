@@ -40,47 +40,36 @@
     </nav>
 
     <div class="container mt-4">
-        <h2>Welcome <?php echo htmlspecialchars($_SESSION['user']['fullName']); ?> </h2>
+        <h2 class="mb-4 fw-bold text-primary">Welcome, <?php echo htmlspecialchars($_SESSION['user']['fullName']); ?>!</h2>
 
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">My Profile</h5>
-                        <p class="card-text">View and update your personal information</p>
-                        <a href="/patient/profile" class="btn btn-primary">View Profile</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">My Appointments</h5>
-                        <p class="card-text">View your upcoming and past appointments</p>
-                        <a href="/patient/appointments" class="btn btn-primary">View Appointments</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-4">
+        <div class="row g-4 mb-4">
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Medical History</h5>
-                        <p class="card-text">Access your medical records and history</p>
-                        <a href="/patient/medical-history" class="btn btn-primary">View History</a>
+                <div class="card shadow h-100 border-0">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="mb-3 text-primary" style="font-size:2.5rem;"><i class="fas fa-user-circle"></i></div>
+                        <h5 class="card-title fw-bold">My Profile</h5>
+                        <p class="card-text text-center">View and update your personal information</p>
+                        <a href="/patient/profile" class="btn btn-outline-primary w-100">View Profile</a>
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">My Prescriptions</h5>
-                        <p class="card-text">View and manage your prescriptions</p>
-                        <a href="/patient/prescriptions" class="btn btn-primary">View Prescriptions</a>
+                <div class="card shadow h-100 border-0">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="mb-3 text-success" style="font-size:2.5rem;"><i class="fas fa-calendar-check"></i></div>
+                        <h5 class="card-title fw-bold">My Appointments</h5>
+                        <p class="card-text text-center">View your upcoming and past appointments</p>
+                        <a href="/patient/appointments" class="btn btn-outline-success w-100">View Appointments</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow h-100 border-0">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="mb-3 text-info" style="font-size:2.5rem;"><i class="fas fa-prescription-bottle-alt"></i></div>
+                        <h5 class="card-title fw-bold">My Prescriptions</h5>
+                        <p class="card-text text-center">View and manage your prescriptions</p>
+                        <a href="/patient/prescriptions" class="btn btn-outline-info w-100">View Prescriptions</a>
                     </div>
                 </div>
             </div>
@@ -89,9 +78,9 @@
         <!-- Recent Prescriptions -->
         <div class="row mt-4">
             <div class="col-12">
-                <div class="card">
+                <div class="card shadow border-0">
                     <div class="card-body">
-                        <h5 class="card-title">Recent Prescriptions</h5>
+                        <h5 class="card-title fw-bold mb-3"><i class="fas fa-history me-2 text-info"></i>Recent Prescriptions</h5>
                         <div id="recentPrescriptions">
                             <div class="text-center">
                                 <div class="spinner-border text-primary" role="status">
