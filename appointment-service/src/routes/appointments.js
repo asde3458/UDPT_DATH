@@ -14,7 +14,11 @@ router.get('/', async (req, res) => {
         if (startDate || endDate) {
             query.date = {};
             if (startDate) query.date.$gte = new Date(startDate);
-            if (endDate) query.date.$lte = new Date(endDate);
+            if (endDate) {
+                const end = new Date(endDate);
+                end.setDate(end.getDate() + 1);
+                query.date.$lt = end;
+            }
         }
 
         const appointments = await Appointment.find(query).sort({ date: 1, time: 1 });
@@ -40,11 +44,17 @@ router.get('/:id', async (req, res) => {
 // Create new appointment
 router.post('/', async (req, res) => {
     try {
+        // Validate required fields
+        const { patientId, patientName, doctorId, doctorName, date, time } = req.body;
+        if (!patientId || !patientName || !doctorId || !doctorName || !date || !time) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
         // Check for conflicting appointments
         const conflictingAppointment = await Appointment.findOne({
-            doctorId: req.body.doctorId,
-            date: req.body.date,
-            time: req.body.time,
+            doctorId: doctorId,
+            date: new Date(date),
+            time: time,
             status: { $nin: ['cancelled', 'completed'] }
         });
 
@@ -52,7 +62,10 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ error: 'Time slot is already booked' });
         }
 
-        const appointment = new Appointment(req.body);
+        const appointment = new Appointment({
+            ...req.body,
+            date: new Date(date)
+        });
         await appointment.save();
         res.status(201).json(appointment);
     } catch (error) {
@@ -63,11 +76,39 @@ router.post('/', async (req, res) => {
 // Update appointment
 router.put('/:id', async (req, res) => {
     try {
+        const updates = { ...req.body };
+
+        // If date is provided, convert it to Date object
+        if (updates.date) {
+            updates.date = new Date(updates.date);
+        }
+
+        // If updating time slot, check for conflicts
+        if ((updates.date || updates.time) && updates.status !== 'cancelled') {
+            const appointment = await Appointment.findById(req.params.id);
+            if (!appointment) {
+                return res.status(404).json({ error: 'Appointment not found' });
+            }
+
+            const conflictingAppointment = await Appointment.findOne({
+                _id: { $ne: req.params.id },
+                doctorId: updates.doctorId || appointment.doctorId,
+                date: updates.date || appointment.date,
+                time: updates.time || appointment.time,
+                status: { $nin: ['cancelled', 'completed'] }
+            });
+
+            if (conflictingAppointment) {
+                return res.status(400).json({ error: 'Time slot is already booked' });
+            }
+        }
+
         const appointment = await Appointment.findByIdAndUpdate(
             req.params.id,
-            { ...req.body, updatedAt: Date.now() },
+            { ...updates, updatedAt: Date.now() },
             { new: true }
         );
+
         if (!appointment) {
             return res.status(404).json({ error: 'Appointment not found' });
         }

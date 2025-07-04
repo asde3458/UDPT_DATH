@@ -2,6 +2,7 @@
 define('USER_SERVICE_URL', 'http://localhost:5000/api');  // Python User Service
 define('PATIENT_SERVICE_URL', 'http://localhost:3000/api');  // Node.js Patient Service
 define('APPOINTMENT_SERVICE_URL', 'http://localhost:3001/api');  // Node.js Appointment Service
+define('DOCTOR_SERVICE_URL', 'http://localhost:5000/api');  // Doctor Service (part of User Service)
 
 // Database configuration (if needed for sessions)
 define('DB_HOST', 'localhost');

@@ -21,10 +21,10 @@
                         <a class="nav-link" href="/doctor/dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/patients">Patients</a>
+                        <a class="nav-link" href="/appointments">Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/appointments">Appointments</a>
+                        <a class="nav-link active" href="/patients">Patients</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -201,68 +201,74 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h4>Medical History - ${patient.name}</h4>
-                        <div class="mb-4">
-                            <h5>Add New Record</h5>
-                            <form onsubmit="addMedicalRecord(event, '${patient._id}')">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Condition</label>
-                                            <input name="condition" class="form-control" required />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Diagnosis</label>
-                                            <input name="diagnosis" class="form-control" required />
-                                        </div>
+                        <form onsubmit="addMedicalRecord(event, '${patient._id}')">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Patient Name</label>
+                                        <input name="patientName" class="form-control" value="${patient.name}" readonly />
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Treatment</label>
-                                            <input name="treatment" class="form-control" required />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Notes</label>
-                                            <textarea name="notes" class="form-control"></textarea>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Condition</label>
+                                        <input name="condition" class="form-control" placeholder="Medical Condition" required />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Diagnosis</label>
+                                        <input name="diagnosis" class="form-control" placeholder="Diagnosis" required />
                                     </div>
                                 </div>
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-primary">Add Record</button>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Treatment</label>
+                                        <input name="treatment" class="form-control" placeholder="Treatment Plan" required />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Notes</label>
+                                        <textarea name="notes" class="form-control" placeholder="Additional Notes"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Date</label>
+                                        <input name="date" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}" required />
+                                    </div>
                                 </div>
-                            </form>
-                        </div>
-                        
-                        <h5>History Records</h5>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Condition</th>
-                                        <th>Diagnosis</th>
-                                        <th>Treatment</th>
-                                        <th>Notes</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${patient.medicalHistory.map(record => `
-                                        <tr>
-                                            <td>${new Date(record.date).toLocaleDateString()}</td>
-                                            <td>${record.condition}</td>
-                                            <td>${record.diagnosis}</td>
-                                            <td>${record.treatment}</td>
-                                            <td>${record.notes || ''}</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="text-end mt-3">
-                            <button type="button" class="btn btn-secondary" onclick="hideForm()">Close</button>
-                        </div>
+                            </div>
+
+                            <div class="text-end">
+                                <button type="button" class="btn btn-secondary" onclick="hideForm()">Cancel</button>
+                                <button type="submit" class="btn btn-success">Add Record</button>
+                            </div>
+                        </form>
+
+                        <hr>
+                        <h5>Previous Records</h5>
+                        <div id="medicalRecords">Loading...</div>
                     </div>
                 </div>
             `;
+
+            // Fetch medical records
+            fetch(`${serviceUrl}/${patient._id}/medical-history`)
+                .then(res => res.json())
+                .then(records => {
+                    const recordsHtml = records.length ? records.map(record => `
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="card-subtitle mb-2 text-muted">Date: ${new Date(record.date).toLocaleDateString()}</h6>
+                                    <span class="text-muted">Patient: ${patient.name}</span>
+                                </div>
+                                <p><strong>Condition:</strong> ${record.condition}</p>
+                                <p><strong>Diagnosis:</strong> ${record.diagnosis}</p>
+                                <p><strong>Treatment:</strong> ${record.treatment}</p>
+                                ${record.notes ? `<p><strong>Notes:</strong> ${record.notes}</p>` : ''}
+                            </div>
+                        </div>
+                    `).join('') : '<p class="text-muted">No medical records found.</p>';
+                    document.getElementById('medicalRecords').innerHTML = recordsHtml;
+                })
+                .catch(error => {
+                    document.getElementById('medicalRecords').innerHTML = '<div class="alert alert-danger">Failed to load medical records.</div>';
+                });
         }
 
         function showEditForm(p) {
@@ -330,6 +336,7 @@
                     treatment: form.treatment.value,
                     notes: form.notes.value,
                     doctorId: doctorId,
+                    doctorName: '<?php echo htmlspecialchars($_SESSION['user']['fullName']); ?>',
                     date: new Date()
                 });
             }
@@ -380,6 +387,7 @@
                         treatment: form.treatment.value,
                         notes: form.notes.value,
                         doctorId: doctorId,
+                        doctorName: '<?php echo htmlspecialchars($_SESSION['user']['fullName']); ?>',
                         date: new Date()
                     })
                 })

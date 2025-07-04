@@ -55,33 +55,49 @@ switch ($path) {
 
     // Doctor routes
     case '/doctor/dashboard':
-        $doctorController->dashboard();
-        break;
-
     case '/patients':
-        $doctorController->patients();
-        break;
-
     case '/appointments':
-        $doctorController->appointments();
-        break;
-
-    // Patient routes
-    case '/patient/dashboard':
-        $patientController->dashboard();
-        break;
-
-    case '/patient/profile':
-        $patientController->profile();
-        break;
-
-    default:
-        // Check if user is logged in for protected routes
-        if (!isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'doctor') {
             header('Location: /login');
             exit;
         }
 
+        switch ($path) {
+            case '/doctor/dashboard':
+                $doctorController->dashboard();
+                break;
+            case '/patients':
+                $doctorController->patients();
+                break;
+            case '/appointments':
+                $doctorController->appointments();
+                break;
+        }
+        break;
+
+    // Patient routes
+    case '/patient/dashboard':
+    case '/patient/appointments':
+    case '/patient/profile':
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'patient') {
+            header('Location: /login');
+            exit;
+        }
+
+        switch ($path) {
+            case '/patient/dashboard':
+                $patientController->dashboard();
+                break;
+            case '/patient/appointments':
+                $patientController->appointments();
+                break;
+            case '/patient/profile':
+                $patientController->profile();
+                break;
+        }
+        break;
+
+    default:
         // Handle 404
         http_response_code(404);
         echo "404 Not Found";

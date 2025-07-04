@@ -44,7 +44,16 @@ class AuthController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $password = $_POST['password'];
+            $confirmPassword = $_POST['confirm_password'];
+            $fullName = $_POST['full_name'];
             $role = $_POST['role'];
+
+            // Validate password confirmation
+            if ($password !== $confirmPassword) {
+                $_SESSION['error'] = 'Passwords do not match';
+                header('Location: /register');
+                exit;
+            }
 
             // Call User Service API
             $ch = curl_init(USER_SERVICE_URL . '/register');
@@ -52,6 +61,7 @@ class AuthController
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
                 'username' => $username,
                 'password' => $password,
+                'fullName' => $fullName,
                 'role' => $role
             ]));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

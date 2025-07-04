@@ -36,6 +36,7 @@ const patientSchema = new mongoose.Schema({
             default: Date.now
         },
         doctorId: String,
+        doctorName: String,
         notes: String
     }],
     createdAt: {
