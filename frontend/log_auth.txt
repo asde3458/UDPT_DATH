@@ -76,3 +76,12 @@ REGISTER: code=201, response={"message":"User created successfully"}
 LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
 LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
 LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient"}
+LOGIN: code=200, response={"id":2,"username":"ab","role":"patient"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient"}
+LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient"}

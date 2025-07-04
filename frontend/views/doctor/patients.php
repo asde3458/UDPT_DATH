@@ -434,7 +434,7 @@
         function deletePatient(patientId) {
             if (!confirm('Are you sure you want to delete this patient?')) return;
 
-            fetch(`/api/patients/${patientId}`, {
+            fetch(`${serviceUrl}/${patientId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
