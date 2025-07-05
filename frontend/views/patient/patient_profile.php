@@ -72,9 +72,7 @@
                 <!-- Personal Information Card -->
                 <div class="card">
                     <div class="card-body position-relative">
-                        <button class="btn btn-primary btn-edit" onclick="toggleEditMode()">
-                            <i class="fas fa-edit"></i> Edit Profile
-                        </button>
+
 
                         <!-- View Mode -->
                         <div id="viewMode">

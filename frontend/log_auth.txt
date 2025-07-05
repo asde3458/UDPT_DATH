@@ -214,3 +214,21 @@ LOGIN: code=500, response={"error":"Database error","detail":"Access denied for 
 LOGIN: code=200, response={"id":5,"username":"demodoctor","role":"doctor","fullName":"Nguyễn Hoàng Hưng"}
 REGISTER: code=201, response={"message":"User created successfully"}
 LOGIN: code=200, response={"id":8,"username":"patient1","role":"patient","fullName":"Nguyễn Văn Hóa"}
+LOGIN: code=200, response={"id":5,"username":"demodoctor","role":"doctor","fullName":"Nguyễn Hoàng Hưng"}
+REGISTER: code=400, response={"error":"Username already exists"}
+REGISTER: code=201, response={"message":"User created successfully"}
+LOGIN: code=200, response={"id":9,"username":"1","role":"doctor","fullName":"1"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":5,"username":"demodoctor","role":"doctor","fullName":"Nguyễn Hoàng Hưng"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":5,"username":"demodoctor","role":"doctor","fullName":"Nguyễn Hoàng Hưng"}
+REGISTER: code=201, response={"message":"User created successfully"}
+LOGIN: code=200, response={"id":10,"username":"demo","role":"doctor","fullName":"Nguyễn Văn A"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":5,"username":"demodoctor","role":"doctor","fullName":"Nguyễn Hoàng Hưng"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":5,"username":"demodoctor","role":"doctor","fullName":"Nguyễn Hoàng Hưng"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=200, response={"id":5,"username":"demodoctor","role":"doctor","fullName":"Nguyễn Hoàng Hưng"}
+LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}

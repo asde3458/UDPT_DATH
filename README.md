@@ -166,3 +166,14 @@ python app.py
 - DELETE /prescriptions/:id - Delete prescription (Doctors)
 - PATCH /prescriptions/:id/status - Update prescription status
 - POST /prescriptions/:id/medications - Add medication to prescription 
+
+
+
+
+
+
+ D:\New folder (9)\UDPT_DATH> cd frontend/public
+PS D:\New folder (9)\UDPT_DATH\frontend\public> php -S localhost:8080
+
+S D:\New folder (9)\UDPT_DATH> cd prescription-service
+PS D:\New folder (9)\UDPT_DATH\prescription-service> python app.py
