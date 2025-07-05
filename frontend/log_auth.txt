@@ -210,3 +210,7 @@ LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName"
 LOGIN: code=200, response={"id":4,"username":"doctor","role":"doctor","fullName":"Nguyễn Hoài Đức"}
 LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
 LOGIN: code=200, response={"id":3,"username":"patient","role":"patient","fullName":"Bùi Kim Phúc"}
+LOGIN: code=500, response={"error":"Database error","detail":"Access denied for user 'root'@'localhost' (using password: NO)"}
+LOGIN: code=200, response={"id":5,"username":"demodoctor","role":"doctor","fullName":"Nguyễn Hoàng Hưng"}
+REGISTER: code=201, response={"message":"User created successfully"}
+LOGIN: code=200, response={"id":8,"username":"patient1","role":"patient","fullName":"Nguyễn Văn Hóa"}

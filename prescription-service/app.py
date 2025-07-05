@@ -10,7 +10,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Cấu hình CORS đơn giản
-CORS(app, origins=["http://localhost:8000", "http://127.0.0.1:8000"], 
+CORS(app, origins=["http://localhost:8000", "http://127.0.0.1:8000", "http://localhost:8080", "http://127.0.0.1:8080"], 
      methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
      allow_headers=["Content-Type", "Authorization"])
 
@@ -22,7 +22,7 @@ app.register_blueprint(prescription_routes, url_prefix='/api/prescriptions')
 @app.route('/api/prescriptions/<path:path>', methods=['OPTIONS'])
 def handle_options(path=None):
     response = jsonify({'status': 'ok'})
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8000')
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8080')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
     return response
